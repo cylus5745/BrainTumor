@@ -76,16 +76,13 @@ def generate_hesitation(Membership_value,Nonmbership_value):
 #############################################################################
 
 # PARAMETERS required are INITIALIZED here
-path="/root/projects/BrainTumor/data/np_data/part_2/image_2.npy"						#set this path to the numpy Image datasets stored in Image_X.npy file
-fuzzy='/root/projects/BrainTumor/data/np_data/part_2/Fuzzy-values'
+path="/root/projects/BrainTumor/data/np_data/part_2/image_2.npy"		#set this path to the numpy Image datasets stored in Image_X.npy file
+fuzzy='/root/projects/BrainTumor/data/np_data/part_2/Fuzzy-values/'
 
 
 # start
 Image=np.load(path)
 shape=np.shape(Image)
-
-
-Hesitation_value=np.zeros(shape)
 
 # Image_fs=generate_fs(Image[0])
 # Membership_value=generate_membership(Image_fs)
