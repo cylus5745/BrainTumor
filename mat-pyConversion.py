@@ -1,15 +1,16 @@
+
+#####################################################################################################################################
+## @author silvanusdavid 
+## This program goes through the .mat file which contain Stuctre 'cjdata' with fields - PID, label, image, tumorBorder, tumorMask   ##
+## and converts data in each filed in the <cjdata> into a numpy array and then saves the array in the current directory with        ##
+## If the data is too large to be processed at a time, copy part of the data into the <path> and then assign the value to the <part>##
+## accordingly																													    ##	
+## NOTE: the program is designed to be time ineffecient inorder to manage the memory effeciency                                     ##
+######################################################################################################################################
+
 import numpy as np
 import os
 import h5py
-
-###############################################################################################################################
-# This program goes through the .mat file which contain Stuctre 'cjdata' with fields - PID, label, image, tumorBorder, tumorMask
-# and converts data in each filed in the <cjdata> into a numpy array and then saves the array in the current directory with 
-# respective field names. The path to the dataset is to be mentioned in the <path>.
-# If the data is too large to be processed at a time, copy part of the data into the <path> and then assign the value to the <part>
-# accordingly
-# NOTE: the program is designed to be time ineffecient inorder to manage the memory effeciency
-################################################################################################################################
 
 # To store all the data objects of a perticular filed at a time
 temp_list=[]
