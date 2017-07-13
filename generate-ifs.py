@@ -9,7 +9,7 @@
 ##########################################################################
 
 import os
-#import skfuzzy as fuzz
+from skfuzzy import membership
 import numpy as np
 import logging as log
 
@@ -38,12 +38,22 @@ def generate_membership(Image_fs):
 	""" this function accepts Image and its corresponding fuzzy set and generates the membership 
 	values for each pixel based on the input parameters"""	
 	if np.shape(Image_fs)==(512,512):
+		
 		mean=np.mean(Image_fs) #  /|\		figure out hoe to calculate mean using restricted equivaleance
 							   # /_*_\
+		std=np.std(Image_fs)
 		#Membership_value=np.zeros((512,512))
 		#Membership_value=0.582*((np.exp(1-abs(Image_fs-mean)))-1)
 		#return Membership_value
-		return 0.582*((np.exp(1-abs(Image_fs-mean)))-1)
+		# k=abs(Image_fs-mean)
+		# exp=np.exp(1-k)
+		# val=exp-1
+		membership_val=membership.gaussmf(Image_fs,mean,std)
+		if np.amin(membership_val)<0 or np.amax(membership_val)>1:
+			log.warning('Value Error: membership value out of range')
+
+		else:
+			return membership_val
 
 	else:
 		log.warning('shape of the Image passed to <generate_membership()> is INVALID!')
@@ -54,8 +64,12 @@ def generate_nonmembership(Membership_value):
 		#Nonmbership_value=np.zeros(512,512)
 		#Nonmbership_value=(1-Membership_value)/(1+lamda*Membership_value)
 		#return Nonmbership_value
-		return (1-Membership_value)/(1+lamda*Membership_value)
+		nonmembership=(1-Membership_value)/(1+lamda*Membership_value)
 
+		if np.amin(nonmembership)<0 or np.amax(nonmembership)>1:
+			log.warning('Value Error: nonmembership value out of range')
+		else:
+			return nonmembership
 	else:
 		log.warning('shape of the Image passed to <generate_nonmembership()> is INVALID!')
 
@@ -64,7 +78,11 @@ def generate_hesitation(Membership_value,Nonmbership_value):
 	if (np.shape(Membership_value)==(512,512) and np.shape(Nonmbership_value)==(512,512)):
 		#Hesitation_value=(1-Membership_value-Nonmbership_value)
 		#return Hesitation_value
-		return (1-Membership_value-Nonmbership_value)
+		hesitation=(1-Membership_value-Nonmbership_value)
+		if np.amin(hesitation)<0 or np.amax(hesitation)>1:
+			log.warning('Value Error: hesitation value out of range')
+		else:
+			return hesitation
 	else:
 		log.warning('shape of the Image passed to <generate_hesitation()> is INVALID!')
 
@@ -82,7 +100,8 @@ fuzzy='/root/projects/BrainTumor/data/np_data/part_2/Fuzzy-values/'
 
 # start
 Image=np.load(path)
-shape=np.shape(Image)
+#shape=np.shape(Image)
+shape=(20,512,512)
 
 # Image_fs=generate_fs(Image[0])
 # Membership_value=generate_membership(Image_fs)
@@ -105,7 +124,7 @@ for turn in range(1,5):
 
 	print('-------------------turn :',turn,"-------------------")
 	example=0						#to keep a track of the current exaple in the iteration
-	while(example<300):
+	while(example<20):
 	#For ach example generate on fuzzy set at each turn
 		print("Generating Fuzzy Values for EXAMPLE:",example)
 		if turn==1:

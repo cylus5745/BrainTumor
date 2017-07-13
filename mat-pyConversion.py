@@ -1,6 +1,7 @@
 
-#####################################################################################################################################
-## @author silvanusdavid 
+######################################################################################################################################
+## @author: silvanusdavid 																											##
+##																																	##
 ## This program goes through the .mat file which contain Stuctre 'cjdata' with fields - PID, label, image, tumorBorder, tumorMask   ##
 ## and converts data in each filed in the <cjdata> into a numpy array and then saves the array in the current directory with        ##
 ## If the data is too large to be processed at a time, copy part of the data into the <path> and then assign the value to the <part>##
