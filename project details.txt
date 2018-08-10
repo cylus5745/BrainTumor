@@ -1,0 +1,11 @@
+name: Silvanus David K
+reg.no: 140953350
+sec/roll: b/41
+mail: 23.silvanusdavid@gmail.com
+mobile: 7022009175
+
+project title: Segmenting braintumor in MR images using Fuzzy 				 c-means clustering
+duration: 6 months
+
+Faculty name: Arjun CV
+mail: arjun.cv@manipal.edu
